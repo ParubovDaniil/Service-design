@@ -1,13 +1,14 @@
 package com.example.buysell.services;
 
 import com.example.buysell.models.User;
+import com.example.buysell.models.enums.Role;
 import com.example.buysell.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.example.buysell.models.enums.Role;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,7 @@ public class UserService {
         }
         userRepository.save(user);
     }
+
     public void changeUserRoles(User user, Map<String, String> form) {
         Set<String> roles = Arrays.stream(Role.values())
                 .map(Role::name)
@@ -60,5 +62,10 @@ public class UserService {
             }
         }
         userRepository.save(user);
+    }
+
+    public User getUserByPrincipal(Principal principal) {
+        if (principal == null) return new User();
+        return userRepository.findByEmail(principal.getName());
     }
 }

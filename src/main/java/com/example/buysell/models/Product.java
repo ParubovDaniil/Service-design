@@ -21,27 +21,29 @@ public class Product {
     private Long id;
     @Column(name = "title")
     private String title;
-    @Column(name = "description",columnDefinition = "text")//для того что бы колонка не была типа varchar а была типа text
+    @Column(name = "description", columnDefinition = "text")
+//для того что бы колонка не была типа varchar а была типа text
     private String description;
     @Column(name = "price")
     private int price;
     @Column(name = "city")
     private String city;
-    @Column(name = "author")
-    private String author;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
-    mappedBy = "product")
+            mappedBy = "product")
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinColumn
+    private User user;
     private LocalDateTime dateOfCreated;
 
     @PrePersist
-    private void init(){
+    private void init() {
         dateOfCreated = LocalDateTime.now();
     }
 
-    public void addImageToProduct(Image image){
+    public void addImageToProduct(Image image) {
         image.setProduct(this);
         images.add(image);
     }

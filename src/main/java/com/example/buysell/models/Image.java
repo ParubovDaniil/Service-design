@@ -29,7 +29,8 @@ public class Image {
     private boolean isPreviewImage;
     @Lob//данное поле в базе данных будет хранить тип LONBGBLOB
     private byte[] bytes;
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)//как повлияет сущеность фотографии на сущность товара и обновить
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+//как повлияет сущеность фотографии на сущность товара и обновить
     private Product product;
 
 }
